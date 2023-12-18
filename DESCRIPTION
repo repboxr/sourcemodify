@@ -8,5 +8,6 @@ Description: Helper functions to modify source code of R scripts
 License: GPL >= 2.0
 Encoding: UTF-8
 LazyData: true
+Remotes: skranz/stringtools
 Depends: stringi, restorepoint, stringtools, dplyr
 RoxygenNote: 7.1.1
