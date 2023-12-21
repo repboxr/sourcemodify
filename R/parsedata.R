@@ -5,10 +5,27 @@
 getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE), line.starts=find.line.starts(code), add_funid=TRUE) {
   restore.point("getAugmentedParseData")
   pd = getParseData(calls, includeText=FALSE)
-  #line.starts = find.line.starts(code)
+
   pd$start = line.starts[pd$line1] + pd$col1-1
   pd$end = line.starts[pd$line2] + pd$col2-1
-  pd$text = substring(code, pd$start, pd$end)
+  #pd$text = substring(code, pd$start, pd$end)
+
+  res = try(substring(code, pd$start, pd$end))
+  # For bug checking in Github Actions container
+  if (is(res,"try-error")) {
+    print(pd$start)
+    print(pd$end)
+    cat("\npd$col1\n")
+    print(pd$col1)
+    cat("\npd$col2\n")
+    print(pd$col2)
+    cat("\nline.starts\n")
+    print(line.starts)
+    pd$text = rep("", length(pd$text)
+  } else {
+    pd$text = res
+  }
+
 
   # Set id equal to row number plus offset
   # parent=0 will be set to -i
