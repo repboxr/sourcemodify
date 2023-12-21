@@ -129,16 +129,19 @@ somo_init = function(code=NULL,files=NULL, start.size = 200, encoding="UTF-8", a
 
   res_df = bind_rows(res_li)
 
-  cat("\nres_df")
-  print(res_df)
+  cat("\ncode\n")
+  print(code)
+
+
+  cat("\ncode_li\n")
+  print(code_li)
+
+  cat("\nres_df\n")
+  print(res_li)
 
   offsets = c(0, sapply(res_df$pd, NROW))
-  cat("\noffsets")
-  print(offsets)
 
   pd = bind_rows(res_df$pd)
-  cat("\npd")
-  print(pd)
 
   somo = list(
     code_df = tibble(
