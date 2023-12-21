@@ -21,7 +21,7 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
     print(pd$col2)
     cat("\nline.starts\n")
     print(line.starts)
-    pd$text = rep("", length(pd$text)
+    pd$text = rep("", length(pd$text))
   } else {
     pd$text = res
   }
