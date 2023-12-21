@@ -11,31 +11,31 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
 
   pd$start = line.starts[pd$line1] + pd$col1-1
   pd$end = line.starts[pd$line2] + pd$col2-1
-  pd$text = substring(code, pd$start, pd$end)
+  #pd$text = substring(code, pd$start, pd$end)
 
-  # res = try(substring(code, pd$start, pd$end))
-  # # For bug checking in Github Actions container
-  # if (is(res,"try-error")) {
-  #   cat("\nCode\n")
-  #   print(code)
-  #   cat("\npd\n")
-  #   print(pd)
-  #
-  #   cat('\nutils::getParseData(parse(text="1+1"))\n')
-  #   print(utils::getParseData(parse(text="1+1", keep.source = TRUE)))
-  #   cat("\npd$start\n")
-  #   print(pd$start)
-  #   print(pd$end)
-  #   cat("\npd$col1\n")
-  #   print(pd$col1)
-  #   cat("\npd$col2\n")
-  #   print(pd$col2)
-  #   cat("\nline.starts\n")
-  #   print(line.starts)
-  #   pd$text = rep("", length(pd$text))
-  # } else {
-  #   pd$text = res
-  # }
+  res = try(substring(code, pd$start, pd$end))
+  # For bug checking in Github Actions container
+  if (is(res,"try-error")) {
+    cat("\nCode\n")
+    print(code)
+    cat("\npd\n")
+    print(pd)
+
+    cat('\nutils::getParseData(parse(text="1+1"))\n')
+    print(utils::getParseData(parse(text="1+1", keep.source = TRUE)))
+    cat("\npd$start\n")
+    print(pd$start)
+    print(pd$end)
+    cat("\npd$col1\n")
+    print(pd$col1)
+    cat("\npd$col2\n")
+    print(pd$col2)
+    cat("\nline.starts\n")
+    print(line.starts)
+    pd$text = rep("", length(pd$text))
+  } else {
+    pd$text = res
+  }
 
 
   # Set id equal to row number plus offset
