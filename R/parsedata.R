@@ -6,7 +6,7 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
   restore.point("getAugmentedParseData")
   pd = utils::getParseData(calls, includeText=FALSE)
   if (is.null(pd)) {
-    stop(paste0("getParseData returned NULL for code:\n", paste0(code, collapse=\n)))
+    stop(paste0("getParseData returned NULL for code:\n", paste0(code, collapse="\n")))
   }
 
   pd$start = line.starts[pd$line1] + pd$col1-1
