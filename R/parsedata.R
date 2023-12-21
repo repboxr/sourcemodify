@@ -13,6 +13,11 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
   res = try(substring(code, pd$start, pd$end))
   # For bug checking in Github Actions container
   if (is(res,"try-error")) {
+    cat("\nCode\n")
+    print(code)
+    cat("\nhead(pd)\n")
+    print(head(pd))
+    cat("\npd$start\n")
     print(pd$start)
     print(pd$end)
     cat("\npd$col1\n")
