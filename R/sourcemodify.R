@@ -83,7 +83,7 @@ z=sum(x) + sum(y)
   cat(res$code)
 
 
-  calls = parse(text=code)
+  calls = parse(text=code,keep.source = TRUE)
   pd = getAugmentedParseData(code)
   call_pd = get.fun.calls.parse.data(code=code)
   res = surround.fun.calls(code, "read.csv","check.path(",")")
@@ -112,6 +112,12 @@ somo_init = function(code=NULL,files=NULL, start.size = 200, encoding="UTF-8", a
   } else if (!is.null(files)) {
     names(code) = files
   }
+  # cat("\nfiles\n")
+  # print(files)
+  # cat("\ncode\n")
+  # print(code)
+  # cat("\ncode_li\n")
+  # print(code_li)
 
   code_li = as.list(code)
 
@@ -129,15 +135,7 @@ somo_init = function(code=NULL,files=NULL, start.size = 200, encoding="UTF-8", a
 
   res_df = bind_rows(res_li)
 
-  cat("\ncode\n")
-  print(code)
 
-
-  cat("\ncode_li\n")
-  print(code_li)
-
-  cat("\nres_df\n")
-  print(res_li)
 
   offsets = c(0, sapply(res_df$pd, NROW))
 
