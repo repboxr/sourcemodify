@@ -147,6 +147,7 @@ somo_init = function(code=NULL,files=NULL, start.size = 200, encoding="UTF-8", a
 
 init.somo.single.code = function(i, code, offset, add_funid = TRUE) {
   restore.point("init.somo.single.code")
+
   calls = parse(text=code, keep.source=TRUE)
   line.starts = find.line.starts(code)
   pd = getAugmentedParseData(code,calls=calls, line.starts = line.starts,add_funid=add_funid) %>% add_id_col("code_ind",i)
