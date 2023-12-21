@@ -4,7 +4,7 @@
 #' where each subexpression is found in the code
 getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE), line.starts=find.line.starts(code), add_funid=TRUE) {
   restore.point("getAugmentedParseData")
-  pd = getParseData(calls, includeText=FALSE)
+  pd = utils::getParseData(calls, includeText=FALSE)
 
   pd$start = line.starts[pd$line1] + pd$col1-1
   pd$end = line.starts[pd$line2] + pd$col2-1
@@ -15,8 +15,11 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
   if (is(res,"try-error")) {
     cat("\nCode\n")
     print(code)
-    cat("\nhead(pd)\n")
-    print(head(pd))
+    cat("\npd\n")
+    print(pd)
+
+    cat('\nutils::getParseData(parse(text="1+1"))\n')
+    print(utils::getParseData(parse(text="1+1")))
     cat("\npd$start\n")
     print(pd$start)
     print(pd$end)
