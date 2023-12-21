@@ -19,7 +19,7 @@ getAugmentedParseData = function(code, calls=parse(text=code,keep.source = TRUE)
     print(pd)
 
     cat('\nutils::getParseData(parse(text="1+1"))\n')
-    print(utils::getParseData(parse(text="1+1")))
+    print(utils::getParseData(parse(text="1+1", keep.source = TRUE)))
     cat("\npd$start\n")
     print(pd$start)
     print(pd$end)
