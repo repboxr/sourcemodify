@@ -34,6 +34,13 @@ z=sum(x) + sum(y)
 "
 
   somo = somo_init(list(c1 = code, c2=code))
+  as_df = somo$as_df
+  id = 34
+  rhs = '35'
+  somo_mod = somo_change_assign_rhs(somo, 34, '"new_value"')
+  cat(somo_make_code(somo_mod)[1])
+
+
   pd = somo$pd
   call_pd = somo$call_pd
   as_df = somo$as_df
@@ -41,12 +48,9 @@ z=sum(x) + sum(y)
   somo = somo %>%
     somo_change_calls_fun_name("sum","my.sum",ignore_if_pkg = TRUE)
 
-
-  somo_make_pd_code(somo)
-
-    somo_surround_calls(funs = "lm",pre = "repbox.reg(",post=")") %>%
-    somo_surround_calls_arg(fun = "read.csv", arg_name = "file",pre="repbox.path(", post=")")
-  cat(somo_make_code(somo)[2])
+  somo_surround_calls(funs = "lm",pre = "repbox.reg(",post=")") %>%
+  somo_surround_calls_arg(fun = "read.csv", arg_name = "file",pre="repbox.path(", post=")")
+  cat(somo_make_code(somo)[1])
 
 
 
@@ -169,6 +173,38 @@ init.somo.single.code = function(i, code, offset, add_funid = TRUE) {
   call_pd = getFunCallsParseData(pd)
   tibble(code_ind=i, code=code, calls=list(calls), pd = list(pd), call_pd = list(call_pd))
 }
+
+#' Changes the rhs of variable assignments
+#'
+#' Take a look at somo$as_df to find the ids of the assignment
+#' that shall be changed.
+#' To get the new code call afterward somo_make_code
+#'
+#' @param somo The somo object generated with somo_init.
+#' @param id The ids of the assignment as specified in somo$as_df
+#' @param new New texts for the right hand sides
+#' @returns The modified somo object
+somo_change_assign_rhs = function(somo,  id, new, new_df=data.frame(parent=id, new=new)) {
+  restore.point("somo_change_assign_rhs")
+  pd = somo$pd
+
+  #new_df = data.frame(parent=id, new_rhs=new_rhs)
+
+  mod_df = pd %>%
+    mutate(.row = 1:n()) %>%
+    semi_join(new_df, by="parent") %>%
+    group_by(parent) %>%
+    filter(.row == max(.row)) %>%
+    ungroup() %>%
+    left_join(new_df, by="parent")
+
+  if (NROW(mod_df)==0) return(somo)
+
+  somo$num_mod = somo$num_mod+1
+  somo$mod_li[[somo$num_mod]] = mod_df
+  somo
+}
+
 
 #' Change the name of a called function without adapting any arguments
 #'
@@ -468,8 +504,7 @@ somo_make_pd_code = function(somo, pd_rows = seq_len(NROW(somo$pd))) {
   pd$res_code
 }
 
-#' Generate a data frame that contains information
-#' for all code modifciations
+#' Generate a data frame that contains information for all code modifications
 somo_make_mod_df = function(somo) {
   restore.point("somo_make_mod_df")
   mod_df = bind_rows(somo$mod_li[1:somo$num_mod])
