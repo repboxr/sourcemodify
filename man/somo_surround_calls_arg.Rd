@@ -6,12 +6,13 @@
 \usage{
 somo_surround_calls_arg(
   somo,
-  fun,
+  fun = NULL,
   arg_name = NULL,
   arg_pos = NULL,
   pre,
   post,
-  arg_def = NULL
+  arg_def = NULL,
+  call_pd_rows = NULL
 )
 }
 \arguments{

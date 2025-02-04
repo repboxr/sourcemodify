@@ -9,7 +9,8 @@ where each subexpression is found in the code}
 getAugmentedParseData(
   code,
   calls = parse(text = code, keep.source = TRUE),
-  line.starts = find.line.starts(code)
+  line.starts = find.line.starts(code),
+  add_funid = TRUE
 )
 }
 \description{

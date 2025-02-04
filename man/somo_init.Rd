@@ -4,10 +4,18 @@
 \alias{somo_init}
 \title{Init a new source modifier object}
 \usage{
-somo_init(code, start.size = 200)
+somo_init(
+  code = NULL,
+  files = NULL,
+  start.size = 200,
+  encoding = "UTF-8",
+  add_funid = TRUE
+)
 }
 \arguments{
 \item{code}{The R source code as text file}
+
+\item{add_funid}{Shall for each expression be determined inside which function it is? Computation sometimes be quite time intensive.}
 }
 \description{
 Init a new source modifier object

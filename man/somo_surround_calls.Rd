@@ -4,7 +4,7 @@
 \alias{somo_surround_calls}
 \title{Surround calls to the specified functions}
 \usage{
-somo_surround_calls(somo, funs, pre, post)
+somo_surround_calls(somo, funs = NULL, pre, post, call_pd_rows = NULL)
 }
 \arguments{
 \item{somo}{The somo object generated with somo_init.}
