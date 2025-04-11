@@ -521,6 +521,7 @@ somo_make_mod_df = function(somo) {
 }
 
 get.mod_df.value = function(mod_df, code, rows = seq_len(NROW(mod_df))) {
+  if (!"type" %in% names(mod_df)) return(mod_df$new[rows])
   pp = mod_df$type[rows]=="pp"
   num.pp = sum(pp)
   if (num.pp==0) return(mod_df$new[rows])
